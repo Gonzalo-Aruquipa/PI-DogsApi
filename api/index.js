@@ -3,15 +3,6 @@ const { conn } = require('./src/db.js');
 const routes = require('./src/routes/dogs')
 
 
-// const app = express();
-// //concexion a la bd
-// try {
-//   await conn.authenticate();
-//   console.log("conexiòn correcta a la bd")
-// } catch (error) {
-//   console.log(error);
-// }
-// Syncing all the models at once.
 
 
 conn.sync({ force: true }).then(() => {
@@ -20,7 +11,3 @@ conn.sync({ force: true }).then(() => {
   });
 });
 
-// server.listen("3001", async () => {
-//   await conn.sync();
-//   console.log("listening on port 3001")
-// })

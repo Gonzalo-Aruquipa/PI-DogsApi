@@ -1,5 +1,7 @@
 const { Router } = require('express');
 const axios = require('axios');
+const {Dog, Temperament} = require('../db.js');
+// const Temperament = require('../models/Temperament.js');
 // Ejemplo: const authRouter = require('./auth.js');
 
 
@@ -41,39 +43,115 @@ const getData = async() => {
     })
 return data;
 }
-
+//dogs all
 router.get("/", async (req, res) => {
+    const {name}= req.query;
+    //dogs desde api
+    const response = await getData();
+
+        try{
+            if(name){
+                //db
+                const dogsAll = await Dog.findAll({
+                    include: {
+                        model: Temperament,
+                        attributes: ['name'], 
+                        through: {
+                            attributes: [],
+                        },
+                    }
+                });
+                //
+                const dogsData = dogsAll.map(values => values.dataValues);
+                //
+                //uniendo datos
+                const dbApi = [...dogsData, ...response];
+
+                const filterDogs = dbApi.filter(dog => dog.name.toLowerCase().includes(name.toLowerCase()));
+                
+                if(filterDogs.length){
+                    res.status(200).send(filterDogs)
+                }else{
+                    res.status(400).send("No se encontraron resultados...")
+                }
+            }else{
+                res.send(response)
+        }}catch(error){
+            res.status(400).send("No se encontraron resultados...")
+
+        }
     
-    const datos = await getData();
-    res.send(datos)
+});
+//dogs from db
+router.get('/created', async(req, res) => {
+
+    const dogsAll = await Dog.findAll({
+        include: {
+            model: Temperament,
+            attributes: ['name'], 
+            through: {
+                attributes: [],
+            },
+        }
+    });
+    res.status(200).send(dogsAll)
 })
 
-router.get('/', async (req, res) => {
-    const {name}= req.query;
+
+router.get("/:idRaza", async(req, res) =>{
+    const {idRaza} = req.params;
+
     try {
-        if(name){
+        //dogs desde bd
+        const dogsAll = await Dog.findAll({
+            include: {
+                model: Temperament,
+                attributes: ['name'], 
+                through: {
+                    attributes: [],
+                },
+            }
+        });
+        const dogsData = dogsAll.map(values => values.dataValues);
+        //dogs desde api
         const response = await getData();
-        const filterDogs = response.filter(dog => dog.name.toLowerCase().includes(name.toLowerCase()));
-        
-        res.send(filterDogs)
+        //uniendo datos
+         const dbApi = [...dogsData, ...response];
+         const raza = dbApi.filter(e => e.id == (idRaza))
+
+        if(raza.length){
+            res.status(200).json(raza)
         }else{
-            throw "No se encontraron resultados..."
+            res.status(400).send("No existe el registro de esa raza")
         }
-        
     } catch (error) {
-        
+        res.status(400).send(error)
     }
 })
-// router.get("/:id", (req, res) =>{
-//     const {id} = req.params;
-//     res.json(id);
-// })
 
-// router.post("/", (req, res) => {
-//     const {id, name} = req.body;
+router.post("/", async(req, res) => {
+    let {name, min_height, max_height, min_weight, max_weight, life_span, temperaments, image} = req.body
 
-//     res.json({id, name})
-// })
+    try {
+        const heightArray=[];
+        heightArray.push(min_height, max_height);
+
+        const weightArray=[];
+        weightArray.push(min_weight, max_weight);
+        
+         const newDog = await Dog.create({name, height: heightArray, weight: weightArray, life_span, image: image ? image : "https://img.freepik.com/vector-premium/adorable-perro-sentado-dibujos-animados_74769-13.jpg?w=2000"});
+
+         let dogTemp = await Temperament.findAll({
+            where: { name: temperaments},
+        })
+
+        newDog.addTemperament(dogTemp);
+        res.status(201).send(newDog);
+
+    } catch (error) {
+        res.status(404).send("Error en alguno de los datos provistos");
+    }
+})
 
 
 module.exports = router;

@@ -10,20 +10,24 @@ module.exports = (sequelize) => {
       allowNull: false,
       primaryKey: true,
     },
-    nombre: {
+    name: {
       type: DataTypes.STRING,
       allowNull : false,
     },
-    altura: {
-      type: DataTypes.FLOAT,
-      allowNull: false,
+    height: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      allowNull: false
     },
-    peso: {
-      type: DataTypes.FLOAT,
-      allowNull: false,
+    weight: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      allowNull: false
     },
-    edad :{
+    life_span :{
       type: DataTypes.INTEGER,
+    },
+    image: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
   },{timestamps:  false});
 };
