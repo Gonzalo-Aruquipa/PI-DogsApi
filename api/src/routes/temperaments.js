@@ -13,9 +13,11 @@ router.get('/', async (req, res) => {
     const temps = data.toString().split(",");
 
     temps.forEach(element => {
+        let tempe = element.trim();
+        if(tempe){
          Temperament.findOrCreate({
-            where:{name: element}
-        })
+            where:{name: tempe}
+        })}
     });
 
     const temperamentsAll = await Temperament.findAll();    
@@ -26,3 +28,4 @@ router.get('/', async (req, res) => {
 
 
 module.exports = router;
+

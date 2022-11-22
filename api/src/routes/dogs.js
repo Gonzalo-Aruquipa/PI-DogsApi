@@ -10,7 +10,7 @@ const router = Router();
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 
-// peticiones
+// petition API
 const getData = async() => {
     
     const response = await axios("https://api.thedogapi.com/v1/breeds");
@@ -30,6 +30,7 @@ const getData = async() => {
     let weightArray = [];
     if (p.weight.metric) {
         weightArray = p.weight.metric.split(" - ");
+        if(weightArray[0] === "NaN") weightArray[0]=0;
     }
         return {
             id: p.id,
@@ -43,48 +44,8 @@ const getData = async() => {
     })
 return data;
 }
-//dogs all
-router.get("/", async (req, res) => {
-    const {name}= req.query;
-    //dogs desde api
-    const response = await getData();
-
-        try{
-            if(name){
-                //db
-                const dogsAll = await Dog.findAll({
-                    include: {
-                        model: Temperament,
-                        attributes: ['name'], 
-                        through: {
-                            attributes: [],
-                        },
-                    }
-                });
-                //
-                const dogsData = dogsAll.map(values => values.dataValues);
-                //
-                //uniendo datos
-                const dbApi = [...dogsData, ...response];
-
-                const filterDogs = dbApi.filter(dog => dog.name.toLowerCase().includes(name.toLowerCase()));
-                
-                if(filterDogs.length){
-                    res.status(200).send(filterDogs)
-                }else{
-                    res.status(400).send("No se encontraron resultados...")
-                }
-            }else{
-                res.send(response)
-        }}catch(error){
-            res.status(400).send("No se encontraron resultados...")
-
-        }
-    
-});
-//dogs from db
-router.get('/created', async(req, res) => {
-
+// petition bd
+const getBd = async () =>{
     const dogsAll = await Dog.findAll({
         include: {
             model: Temperament,
@@ -94,29 +55,75 @@ router.get('/created', async(req, res) => {
             },
         }
     });
-    res.status(200).send(dogsAll)
+
+    const data = dogsAll.map(dog => {
+        let temps = dog.temperaments.map(p => p.name);
+            return {
+                id: dog.id,
+                name: dog.name,
+                height: dog.height,
+                weight: dog.weight,
+                temperaments: temps,
+                life_span: dog.life_span,
+                image: dog.image,
+            }
+        }
+        )
+        return data
+}
+//dogs all
+router.get("/", async (req, res) => {
+    const {name}= req.query;
+    //dogs desde api
+    const response = await getData();
+    //db
+    const dogsAll = await getBd();
+    
+    //uniendo datos
+    const dbApi = [...dogsAll, ...response];
+
+        try{
+            if(name){
+                const filterDogs = dbApi.filter(dog => dog.name.toLowerCase().includes(name.toLowerCase()));
+                
+                if(filterDogs.length){
+                    res.status(200).send(filterDogs)
+                }else{
+                    res.status(400).send("No se encontraron resultados...")
+                }
+            }else{
+                const dogMain = dbApi.map(dog => {return {id:dog.id, name: dog.name, temperaments: dog.temperaments, weight: dog.weight, image: dog.image}});
+                res.send(dogMain)
+        }}catch(error){
+            res.status(400).send("No se encontraron resultados...")
+
+        }
+    
+});
+//dogs from API
+router.get('/api', async(req, res) => {
+
+    const response = await getData();
+    const dogMain = response.map(dog => {return {id:dog.id, name: dog.name, temperaments: dog.temperaments, weight: dog.weight, image: dog.image}});
+    res.send(dogMain)
 })
 
-
+//dogs from db
+router.get('/created', async(req, res) => {
+    const data = await getBd();
+    res.status(200).send(data)
+})
+//dogs by id
 router.get("/:idRaza", async(req, res) =>{
     const {idRaza} = req.params;
 
     try {
         //dogs desde bd
-        const dogsAll = await Dog.findAll({
-            include: {
-                model: Temperament,
-                attributes: ['name'], 
-                through: {
-                    attributes: [],
-                },
-            }
-        });
-        const dogsData = dogsAll.map(values => values.dataValues);
+        const dogsAll = await getBd();
         //dogs desde api
         const response = await getData();
         //uniendo datos
-         const dbApi = [...dogsData, ...response];
+         const dbApi = [...dogsAll, ...response];
          const raza = dbApi.filter(e => e.id == (idRaza))
 
         if(raza.length){
@@ -139,7 +146,7 @@ router.post("/", async(req, res) => {
         const weightArray=[];
         weightArray.push(min_weight, max_weight);
         
-         const newDog = await Dog.create({name, height: heightArray, weight: weightArray, life_span, image: image ? image : "https://img.freepik.com/vector-premium/adorable-perro-sentado-dibujos-animados_74769-13.jpg?w=2000"});
+         const newDog = await Dog.create({name, height: heightArray, weight: weightArray, life_span, image: image ? image : "https://w7.pngwing.com/pngs/103/703/png-transparent-dog-puppy-footprints-miscellaneous-animals-paw.png"});
 
          let dogTemp = await Temperament.findAll({
             where: { name: temperaments},
