@@ -1,1 +1,38 @@
-
+.divcard {
+    text-decoration: none;
+    background-color: #8d4925;
+    background-image: url('../../img/newt.png');
+    background-repeat: no-repeat;
+    background-position: 100%;
+    background-size: cover;
+    height: 410px;
+    width: 310px;
+    padding-left: 0px;
+    padding-top: 0px;
+    padding-bottom: 5px;
+    text-decoration: none;
+    border-radius: 15px;
+    
+}
+.imgsize {
+    height: 250px;
+    width: 310px;
+    border-radius: 15px;
+}
+/* .textform {
+} */
+a:link, a:visited, a:active {
+    text-decoration:none;
+}
+.hdos {
+    color: #3b5110;
+}
+.textcolors {
+    color: white;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+.textcolorst {
+    font-size: 15px;
+    color: white;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}

@@ -1,3 +1,4 @@
+import './detail.css'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom';
@@ -24,24 +25,32 @@ const Detail = () => {
     }
 
   return (
-    <div >
-        <div>
+    <div className='colorfon'>
+      <div className='divd'>
         <Link to='/home'>
-        <button >Home</button>
+        <button className='botonhome '></button>
         </Link>
         </div>
-      <div className='grid'>
-        <img  src={`${image}`} alt={`imagen de: ${name}`}/>
+      <div className='div-container'>
+        
+      <div >
+        <img  className='imgsized' src={`${image}`} alt={`imagen de: ${name}`}/>
       </div>
-      <h2>Name: {name}</h2>
-      <h2>Height: {`${height && height[0]} - ${height && height[1]} Cm`}</h2>
-      <h2>Weight: {`${weight && weight[0]} - ${weight && weight[1]} Kg`}</h2>
-      <h2>Life Span: {life_span}</h2>
-      <h2 >Temperaments: 
+      <p className='text-div'>Name</p>
+      <span className='div-text'>{name}</span>
+      <p className='text-div'>Height</p>
+      <span className='div-text'> {`${height && height[0]} - ${height && height[1]} Cm`}</span>
+      <p className='text-div'>Weight</p>
+      <span className='div-text'>{`${weight && weight[0]} - ${weight && weight[1]} Kg`}</span>
+      <p className='text-div'>Life Span</p>
+      <span className='div-text'>{life_span}</span>
+      <p className='text-div'>Temperaments</p>
+      <span className='div-text'> 
         {
         temperaments.map((temps) => <span key={temps+Math.random}> {temps}</span>)
         }
-      </h2>
+      </span>
+      </div>
     </div>
   )
 }

@@ -1,6 +1,6 @@
 import './navbar.css'
 import React, {useState, useEffect} from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link} from 'react-router-dom'
 import { getDogsQuery, getCreateDogs, getDogsApi,getTemperaments, getTemperamentsFilter, getAlphabetic, getWeight} from '../../actions';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -58,34 +58,32 @@ const NavBar = () => {
 
 
   return (
-    <header>
-        <div>
-          <nav className="site-header" >
-              <div>
-                {/* <NavLink  to={"/home"}>Home</NavLink> */}
+    <header >
+        <div >
+          <nav className="site-header " >
+              
 
-              </div>
-                <div className='div'>
-                  <p>Show Alphabetically</p> 
-                <select onChange={handleAlphabetic} defaultValue={'DEFAULT'} >
+                <div className='divv'>
+                  <p className='text'>Show Alphabetically</p> 
+                <select className='selectfilter' onChange={handleAlphabetic} defaultValue={'DEFAULT'} >
                 <option value="DEFAULT" disabled >---</option>
                 <option value="AZ">A-Z</option>
                 <option value="ZA">Z-A</option>
               </select>
                 </div>
 
-              <div className='div'>
-                <p>Show by weight</p> 
-                <select onChange={handleWeight} defaultValue={'DEFAULT'}>
+              <div className='divv'>
+                <p className='text'>Show by Weight</p> 
+                <select className='selectfilter' onChange={handleWeight} defaultValue={'DEFAULT'}>
                 <option value="DEFAULT" disabled>---</option>
                 <option value="max">Max</option>
                 <option value="min">Min</option>
               </select>
               </div>
 
-              <div className='div'>
-                <p>Show By Temperaments</p>
-                <select onChange={handleTemperaments } defaultValue={'DEFAULT'}>
+              <div className='divv'>
+                <p className='text'>Show By Temperaments</p>
+                <select  className='selectfilter' onChange={handleTemperaments } defaultValue={'DEFAULT'}>
                 <option value="DEFAULT" disabled>---</option>
                  {
                   temps.map(temperament => 
@@ -95,22 +93,26 @@ const NavBar = () => {
                 </select>
               </div>
 
-              <div className='div'>
-               <p>filter by createds</p>
-                <select onChange={handleCreated} defaultValue={'DEFAULT'}>
+              <div className='divv'>
+               <p className='text'>Filter by Createds</p>
+                <select className='selectfilter' onChange={handleCreated} defaultValue={'DEFAULT'}>
                  <option value="DEFAULT" disabled >---</option>
                  <option value="created">Dogs Created</option>
                  <option value="apiDogs">Dogs Api</option>
                 </select>
               </div>
 
-              <div className='div'>
-              <input type="text" value={dogName} onChange={handleChange} placeholder='Search...'/>
-              <button type='submit' onClick={handleSubmit}>Search</button>
+              <div className='divv'>
+              <button className='botonnn' type='submit' onClick={handleSubmit}>Search</button>
+              <input  className='search' type="text" value={dogName} onChange={handleChange} placeholder='Search...'/>
               </div>
 
-              <div>
-              <NavLink exact to={"/createDog"}>Create dog</NavLink>
+
+              
+              <div className='divv'>
+              <Link to='/createDog'>
+              <button className='botonn'>Create Dog</button>
+              </Link>
               </div>
           </nav>
         </div>

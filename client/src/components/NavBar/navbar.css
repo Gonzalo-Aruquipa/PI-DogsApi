@@ -1,21 +1,73 @@
 
 
 .site-header {
-    background-color: #00a1b1;
+    /* background-color: #78451a; */
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-evenly;
     flex-wrap: nowrap;
     align-items: center;
-    padding-bottom: 20px;
+    padding-bottom: 5px;
+    padding-top: 3px;
+    background-color: #3b5110;
+    background-image: url('../../img/verde.png');
   
     
 }
-.div{
+.divv{
     text-align: center;
+    background-image: url('../../img/tabla.png');
+    background-size: 110% 120%;
+    width: 17rem;
+    height: 6rem;
+    padding-top: 10px;
+    -webkit-text-fill-color: darkorange;
+    -webkit-text-stroke: 0.2px white;
 
 }
-
+.botonn {
+    color: darkorange;
+    font-weight: 100;
+    text-decoration: none;
+    font-size: 25px;
+    padding: 9px 3rem;
+    margin-top: 1rem;
+    display: inline-block;
+    
+    text-align: center;
+    border: none;
+    background-color: transparent;
+    -webkit-text-fill-color: darkorange;
+    -webkit-text-stroke: 0.2px white;
+}
+.botonnn {
+    color: darkorange;
+    font-weight: 100;
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+    padding: 7px 7rem;
+    margin-top: 1rem;
+    display: inline-block;
+    
+    text-align: center;
+    border: none;
+    background-color: transparent;
+}
+.selectfilter {
+    width: 120px;
+    text-align: center;
+}
+.text {
+    color: darkorange;
+    border:2px;
+    -webkit-text-fill-color: darkorange;
+    -webkit-text-stroke: 0.2px white;
+    font-size: 20px;
+}
+.search {
+    width: 120px;
+}
 
 
 

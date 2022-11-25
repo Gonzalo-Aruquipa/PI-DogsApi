@@ -10,7 +10,10 @@ export default function Landing(){
     }
     return(
             <div  className="landing">
-            <button className="boton" onClick={clickHome}>Iniciar</button>
+                <div className="divi">
+            <button className="boton" onClick={clickHome}>Go Home</button>
+
+                </div>
             </div>
     )
 }

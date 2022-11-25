@@ -111,130 +111,130 @@ const CreateDog = () => {
   }
   
   return (
-    <div>
-        <form  action="" id='form' onSubmit={handleSubmit}>
-              <div>
+    <div className='divglobal'>
+              <div className='divdc'>
                 <Link to='/home'>
-                <button >Home</button>
+                <button className='botonhomec '></button>
                 </Link>
               </div>
-            <div >
+
+
+                <form  action="" id='form' onSubmit={handleSubmit}>
+
+               <div className='div-containerc'>
+                 <div  className='div'>
+                 <label className='tem'>Name</label>
+                 <input
+                 className={errors.name && 'danger'} 
+                 type="text" 
+                 name='name' 
+                 value={form.name}
+                 required 
+                 onChange={ (e) => handleInputChange(e)}
+                 />
+                 {errors.name && (<p className="danger">{errors.name}</p>)}
+                 </div>
                 
 
+                 <div  className='div'>
+                 <label className='tem'> Height - min</label>
+                 <input 
+                 type="number"
+                 name='min_height'
+                 value={form.min_height}
+                 min='0'
+                 required
+                 onChange={handleInputChange}/>
+                 {errors.min_height && (<p className="danger">{errors.min_height}</p>)}
 
-                <div  className='div'>
-                <label > Name</label>
-                <input
-                className={errors.name && 'danger'} 
-                type="text" 
-                name='name' 
-                value={form.name}
-                required 
-                onChange={ (e) => handleInputChange(e)}
-                />
-                {errors.name && (<p className="danger">{errors.name}</p>)}
-                </div>
-                
-
-                <div  className='div'>
-                <label > Height - min</label>
-                <input 
-                type="number"
-                name='min_height'
-                value={form.min_height}
-                min='0'
-                required
-                onChange={handleInputChange}/>
-                {errors.min_height && (<p className="danger">{errors.min_height}</p>)}
-
-                <label > Height - max</label>
-                <input 
-                type="number"
-                name='max_height'
-                value={form.max_height}
-                min={form.min_height}
-                required
-                onChange={handleInputChange}/>
-                {errors.max_height && (<p className="danger">{errors.max_height}</p>)}
-                </div>
+                 <label className='tem'> Height - max</label>
+                 <input 
+                 type="number"
+                 name='max_height'
+                 value={form.max_height}
+                 min={form.min_height}
+                 required
+                 onChange={handleInputChange}/>
+                 {errors.max_height && (<p className="danger">{errors.max_height}</p>)}
+                 </div>
 
                 
-                <div  className='div'>
-                <label > Weight - min</label>
-                <input 
-                type="number"
-                name='min_weight'
-                value={form.min_weight}
-                min='0'
-                required
-                onChange={handleInputChange}/>
-                {errors.min_weight && (<p className="danger">{errors.min_weight}</p>)}
+                 <div  className='div'>
+                 <label className='tem'> Weight - min</label>
+                 <input 
+                 type="number"
+                 name='min_weight'
+                 value={form.min_weight}
+                 min='0'
+                 required
+                 onChange={handleInputChange}/>
+                 {errors.min_weight && (<p className="danger">{errors.min_weight}</p>)}
 
-                <label > Weight - max</label>
-                <input 
-                type="number"
-                name='max_weight'
-                value={form.max_weight}
-                min={form.min_weight}
-                required
-                onChange={handleInputChange}/>
-                {errors.max_weight && (<p className="danger">{errors.max_weight}</p>)}
-                </div>
+                 <label className='tem'> Weight - max</label>
+                 <input 
+                 type="number"
+                 name='max_weight'
+                 value={form.max_weight}
+                 min={form.min_weight}
+                 required
+                 onChange={handleInputChange}/>
+                 {errors.max_weight && (<p className="danger">{errors.max_weight}</p>)}
+                 </div>
 
-                <div  className='div'>
-                <label > Life span</label>
-                <input 
-                type="text"
-                placeholder='example: 1 - 2 years'
-                name='life_span'
-                value={form.life_span}
-                required
-                onChange={handleInputChange}/>
-                {errors.life_span && (<p className="danger">{errors.life_span}</p>)}
-                </div>
+                 <div  className='div'>
+                 <label className='tem'> Life span</label>
+                 <input 
+                 type="text"
+                 placeholder='example: 1 - 2 years'
+                 name='life_span'
+                 value={form.life_span}
+                 required
+                 onChange={handleInputChange}/>
+                 {errors.life_span && (<p className="danger">{errors.life_span}</p>)}
+                 </div>
 
-                <div  className='div'>
-                <label > Image</label>
-                <input 
-                type="text"
-                placeholder='Enter url of your image'
-                name='image'
-                value={form.image}
-                onChange={handleInputChange}/>
-                </div>
+                 <div  className='div'>
+                 <label className='tem'> Image</label>
+                 <input 
+                 type="text"
+                 placeholder='Enter url of your image'
+                 name='image'
+                 value={form.image}
+                 onChange={handleInputChange}/>
+                 </div>
 
-                <div className='div'>
-                <p>Show By Temperaments</p>
-                <select onChange={handleSelect} defaultValue={'DEFAULT'}>
-                <option value="DEFAULT" disabled>---</option>
+                 <div className='div'>
+                 <label className='tem'>Add Temperaments</label>
+                 <select onChange={handleSelect} defaultValue={'DEFAULT'}>
+                 <option value="DEFAULT" disabled>---</option>
                  {
-                  temperaments.map(temperament => 
+                   temperaments.map(temperament => 
                     <option value={temperament.name} key={temperament.id}>{temperament.name}</option>
-                  )
-                 }
-                </select>
+                    )
+                  }
+                 </select>
+                 </div>
+                
                 </div>
 
-                
 
-                
+            </form>
+            <div className='divcv'>
+            <button 
+            className='botonnc'
+            type='submit'
+            form='form'>Create Dog</button>
             </div>
 
 
-            
-            <button 
-            type='submit'
-            // onChange={handleSubmit}
-            form='form'>Create Dog</button>
-        </form>
-        <div >
+            <div >
               <div >
-              <h2>Temperaments</h2>
+              <h3 className='tem'> Selected Temperaments</h3>
               </div>
-              <div>
+              <div className='div-containercc'>
               {form.temperaments.map(temperament => 
               <div  key={temperament} onClick={() => handleDelete(temperament)}>
-              <p>{`${temperament} X`}</p>
+              <p className='tem'>{`${temperament} |`}</p>
               </div>    
               )}
               </div>

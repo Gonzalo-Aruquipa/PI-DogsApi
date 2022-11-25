@@ -1,0 +1,15 @@
+.box{
+    background-color: #8d4925;
+    color: darkorange;
+    border-color: #3b5110;
+}
+.boxx{
+    background-color:  darkorange;
+    color: #8d4925;
+    border-color: #3b5110;
+}
+.divbox {
+    align-items: center;
+    padding-left: 390px;
+    padding-top: 30px;
+}

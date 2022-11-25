@@ -146,7 +146,7 @@ router.post("/", async(req, res) => {
         const weightArray=[];
         weightArray.push(min_weight, max_weight);
         
-         const newDog = await Dog.create({name, height: heightArray, weight: weightArray, life_span, image: image ? image : "https://w7.pngwing.com/pngs/103/703/png-transparent-dog-puppy-footprints-miscellaneous-animals-paw.png"});
+         const newDog = await Dog.create({name, height: heightArray, weight: weightArray, life_span, image: image ? image : "https://img.freepik.com/vector-premium/huella-vector-pata-perro_71328-325.jpg?w=2000"});
 
          let dogTemp = await Temperament.findAll({
             where: { name: temperaments},

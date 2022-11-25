@@ -1,3 +1,4 @@
+import './pagination.css'
 import React from 'react'
 
 
@@ -9,13 +10,13 @@ const Pagination = ({totalDogs,dogsPerPage,setCurrentPage,currentPage}) => {
     }
 
     return (
-        <div >
+        <div className='divbox'>
             {pages.map((page, index) => {
                 return (
-                    <button
+                    <button 
                         key={index}
                         onClick={() => setCurrentPage(page)}
-                        className={page == currentPage ? "active" : ""}>
+                        className={page === currentPage ? "active boxx " : "box" }>
                         {page}
                     </button>
                 );
