@@ -3,8 +3,12 @@ import React from 'react'
 import { useEffect, useState } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import { Link } from 'react-router-dom'
-import { getTemperaments, postDog } from '../../actions';
-
+import { getTemperaments, postDog, startUploadingFile } from '../../actions';
+import {IconButton} from "@mui/material";
+import {UploadOutlined} from "@mui/icons-material"
+import { useRef } from 'react';
+import SweetAlert2 from "react-sweetalert2"
+import { useHistory} from "react-router-dom";
 
 export function validate(input) {
   let errors = {};
@@ -50,6 +54,10 @@ export function validate(input) {
 const CreateDog = () => {
   const dispatch = useDispatch();
   const temperaments = useSelector(state => state.temperaments);
+  const images_c = useSelector(state => state.images);
+  const navigate = useHistory();
+
+  const [swalProps, setSwalProps] = useState({});
 
   // const [button, setButton] = useState(true);
   const [errors, setErrors] = useState({
@@ -96,8 +104,11 @@ const CreateDog = () => {
   }
   const handleSubmit = (e) => {
     e.preventDefault();
+    form.image = images_c;
     dispatch(postDog(form));
-    alert("Dog successfully created");
+    navigate.push("/home");
+
+    // alert("Dog successfully created");
     setForm({
         name: "",
         min_height: "",
@@ -108,6 +119,15 @@ const CreateDog = () => {
         image: "",
         temperaments: []
     });
+  }
+
+  
+
+  const fileInputRef = useRef();
+  const onFileInputChange = ({target}) => {
+    if(target.files === 0) return;
+    dispatch(startUploadingFile(target.files));
+
   }
   
   return (
@@ -195,12 +215,18 @@ const CreateDog = () => {
 
                  <div  className='div'>
                  <label className='tem'> Image</label>
-                 <input 
-                 type="text"
-                 placeholder='Enter url of your image'
-                 name='image'
-                 value={form.image}
-                 onChange={handleInputChange}/>
+                 <input
+                 type = "file"
+                 ref = {fileInputRef}
+                 onChange = {onFileInputChange}
+                 style = {{ display: "none"}} 
+                 />
+                 <IconButton
+                 color='primary'
+                onClick={()=> fileInputRef.current.click()}
+                 >
+                  <UploadOutlined/>
+                 </IconButton>
                  </div>
 
                  <div className='div'>
@@ -220,10 +246,26 @@ const CreateDog = () => {
 
             </form>
             <div className='divcv'>
-            <button 
+            {/* <button 
             className='botonnc'
             type='submit'
-            form='form'>Create Dog</button>
+            form='form'>Create Dog
+            </button> */}
+            <button  className='botonnc'
+             type='submit'
+             form='form'
+             onClick={() => {
+              setSwalProps({
+                  show: true,
+                  title: '¡El Perro ha sido creado exitosamente!',
+                  icon: 'success',
+              });
+          }}
+             >
+                Create Dog
+            </button>
+
+            <SweetAlert2 {...swalProps} />
             </div>
 
 
@@ -239,6 +281,12 @@ const CreateDog = () => {
               )}
               </div>
               </div>
+
+              <div>
+            
+
+            
+        </div>
     </div>
   )
 }

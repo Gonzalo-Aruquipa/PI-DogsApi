@@ -3,10 +3,16 @@ const initialState = {
   dogsCreated: [],
   dogsDetail: [],
   temperaments: [],
+  images: [],
 };
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "GET_DOGS_ALL":
+    case "DOG":
+      return {
+        ...state,
+        dogsCreated: action.payload,
+      };
+      case "GET_DOGS_ALL":
       return {
         ...state,
         dogsAll: action.payload,
@@ -51,6 +57,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         dogsDetail: action.payload,
+      };
+      case "IMG_C":
+      return {
+        ...state,
+        images: action.payload,
       };
 
     default:

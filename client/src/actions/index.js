@@ -169,9 +169,19 @@ export const getWeight = (minmax) => {
 // dog create
 
 export const postDog = (data) => {
-  return async function () {
-    const dogs = await axios.post(`http://localhost:3001/dogs`, data);
-    return dogs;
+  return async function (dispatch) {
+
+    try {
+      const dogs = await axios.post(`http://localhost:3001/dogs`, data);
+
+      return dispatch({
+        type: "DOG",
+        payload: dogs,
+      });
+      
+    } catch (error) {
+      console.log(error)
+    }
   };
 };
 //show detail
@@ -183,6 +193,32 @@ export const getDetail = (id) => {
       return dispatch({
         type: "DOG_DETAIL",
         payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+//cloudinary
+export const startUploadingFile = (file = []) => {
+  return async function (dispatch) {
+    const cloudUrl = "https://api.cloudinary.com/v1_1/dhuxirmyv/upload";
+    const formData = new FormData();
+    formData.append("upload_preset", "proyecto");
+    formData.append("file", file[0]);
+
+    try {
+      const response = await fetch(cloudUrl, {
+        method: "POST",
+        body: formData,
+      });
+      if (!response.ok) throw new Error("Can't upload image");
+      const cloudResponse = await response.json();
+
+      return dispatch({
+        type: "IMG_C",
+        payload: cloudResponse.secure_url,
       });
     } catch (error) {
       console.log(error);
