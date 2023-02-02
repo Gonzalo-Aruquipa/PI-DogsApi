@@ -14,10 +14,9 @@ code {
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 5px;
+  gap: 7px;
   padding-top: 40px;
-  padding-left: 9px;
-  padding-right: 5px;
+  padding-left: 75px;
 }
 /* img {
   max-width: 100%;
